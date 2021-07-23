@@ -1,8 +1,11 @@
-/* 推導港拼
+/* 推導港拼（香港政府粵語拼音）
  *
- * based on https://ayaka.shn.hk/teoi/
+ * https://morrisl27.github.io/linguistics/KongPing.html
+ *
+ * 參考文獻: 片岡新（2014）: “香港政府粵語拼音”：一個亂中有序的系統
  * 
- * reference: 片岡新（2014）: “香港政府粵語拼音”：一個亂中有序的系統
+ * 程序基於綾香廣州音及分韻撮要推導 
+ * https://ayaka.shn.hk/teoi/ & https://ayaka.shn.hk/fanwan/
  *
  * @author Noroki
  */
@@ -10,15 +13,15 @@
 const is = (x) => 音韻地位.屬於(x);
 
 
-// 音韵地位对应音位开关
+// 選項
 if (!音韻地位) return [
-  ['拼式', [1, '英式', '歐陸式']],
-  ['口語eng及ek'  , false], // 关闭：ing/ik，打开：eng/ek
-  ['Ts訛作Ch'  , false], // 关闭：Ts，打开：Ch
-  ['aa作ah'  , true], // 关闭：a，打开：ah
-  ['oi作oy'  , true], // 关闭：oi，打开：oy
-  ['ei作ee'  , false], // 关闭：ei，打开：ee
-  ['au作ow'  , true], // 关闭：au，打开：ow
+  ['拼式', [1, '英式', '歐陸式']],// 切換英式/歐陸式
+  ['口語eng及ek'  , false], // 關：ing/ik，開：eng/ek
+  ['Ts訛作Ch'  , false], // 關：Ts，開：Ch
+  ['aa作ah'  , true], // 關：a，開：ah
+  ['oi作oy'  , true], // 關：oi，開：oy
+  ['ei作ee'  , false], // 關：ei，開：ee
+  ['au作ow'  , true], // 關：au，開：ow
 ];
 
 function 聲母規則() {
