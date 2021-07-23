@@ -12,7 +12,7 @@ const is = (x) => 音韻地位.屬於(x);
 
 // 音韵地位对应音位开关
 if (!音韻地位) return [
-  ['拚式', [1, '英式', '歐陸式']],
+  ['拼式', [1, '英式', '歐陸式']],
   ['口語eng及ek'  , false], // 关闭：ing/ik，打开：eng/ek
   ['Ts訛作Ch'  , false], // 关闭：Ts，打开：Ch
   ['aa作ah'  , true], // 关闭：a，打开：ah
@@ -109,7 +109,7 @@ function 韻母規則() {
   if (is('支脂之微韻 合口 牙喉音')) return 'ai';
 
   // 遇攝
-  if (is('魚虞韻 幫組 幫滂並母')) return 選項.拚式 === '歐陸式'? 'u' : 'oo';
+  if (is('魚虞韻 幫組 幫滂並母')) return 選項.拼式 === '歐陸式'? 'u' : 'oo';
   if (is('魚虞韻 幫組 明母')) return 'o';
   if (is('魚虞韻 舌齒音 端組')) return 'eoi';
   if (is('魚虞韻 舌齒音 來母')) return 'eoi';
@@ -123,7 +123,7 @@ function 韻母規則() {
   if (is('模韻 脣音')) return 'o';
   if (is('模韻 舌齒音')) return 'o';
   if (is('模韻 牙喉音 疑母')) return '';
-  if (is('模韻 牙喉音')) return 選項.拚式 === '歐陸式'? 'u' : 'oo';
+  if (is('模韻 牙喉音')) return 選項.拼式 === '歐陸式'? 'u' : 'oo';
 
   // 蟹攝
   if (is('齊韻')) return 'ai';
@@ -158,7 +158,7 @@ function 韻母規則() {
   if (is('元韻 幫組')) return 'aan';
   if (is('元韻 開口')) return 'in';
   if (is('元韻 合口')) return 'uen';
-  if (is('魂韻 幫組')) return 選項.拚式 === '歐陸式'? 'un' : 'oon';
+  if (is('魂韻 幫組')) return 選項.拼式 === '歐陸式'? 'un' : 'oon';
   if (is('魂韻 端組')) return 'eon';
   if (is('魂韻 來母')) return 'eon';
   if (is('魂韻 精組')) return 'uen';
@@ -166,11 +166,11 @@ function 韻母規則() {
   if (is('痕韻')) return 'an';
 
   // 山攝
-  if (is('寒韻 幫組')) return 選項.拚式 === '歐陸式'? 'un' : 'oon';
+  if (is('寒韻 幫組')) return 選項.拼式 === '歐陸式'? 'un' : 'oon';
   if (is('寒韻 開口 舌齒音')) return 'aan';
   if (is('寒韻 開口 牙喉音')) return 'on';
   if (is('寒韻 合口 舌齒音')) return 'uen';
-  if (is('寒韻 合口 牙喉音')) return 選項.拚式 === '歐陸式'? 'un' : 'oon';
+  if (is('寒韻 合口 牙喉音')) return 選項.拼式 === '歐陸式'? 'un' : 'oon';
   if (is('刪山韻')) return 'aan';
   if (is('仙先韻 幫組')) return 'in';
   if (is('仙先韻 開口')) return 'in';
@@ -262,7 +262,7 @@ const isUE = ['ue'].some((x) => 韻母.startsWith(x));
 if (聲母 === 'Ch' && isUE) 韻母 = 'u' + 韻母.slice(2);
 
 // a 作 u （英式）
-if (選項.拚式 === '英式' && ['am', 'an', 'ap', 'ak', 'at'].includes(韻母)) 韻母 = 'u' + 韻母.slice(1);// at -> ut?
+if (選項.拼式 === '英式' && ['am', 'an', 'ap', 'ak', 'at'].includes(韻母)) 韻母 = 'u' + 韻母.slice(1);// at -> ut?
 // TODO: an not to un
 
 // 單 aa 作 ah
@@ -270,7 +270,7 @@ const isAA = ['aa'].some((x) => 韻母.startsWith(x));
 if (isAA) 韻母 = 'a' + 韻母.slice(2);
 
 // 單 i 作 ee （英式）
-if (選項.拚式 === '英式' && 韻母 === 'i') 韻母 = 'ee'; 
+if (選項.拼式 === '英式' && 韻母 === 'i') 韻母 = 'ee'; 
 
 // 口語 ing 作 eng
 if (選項.口語eng及ek && ['ing', 'ik'].includes(韻母)) 韻母 = 'e' + 韻母.slice(1);
@@ -283,7 +283,7 @@ if (選項.oi作oy && 韻母 === 'oi') 韻母 = 'oy';
 
 // ei 作 ee
 if (選項.ei作ee && 韻母 === 'ei') {
-  if (選項.拚式 === '英式') 韻母 = 'ee';
+  if (選項.拼式 === '英式') 韻母 = 'ee';
   else 韻母 = 'i';
 }
 
