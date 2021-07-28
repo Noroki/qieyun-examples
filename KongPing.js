@@ -20,8 +20,9 @@ if (!音韻地位) return [
   ['Ts訛作Ch'  , false], // 關：Ts，開：Ch
   ['aa作ah'  , true], // 關：a，開：ah
   ['oi作oy'  , true], // 關：oi，開：oy
-  ['ei作ee'  , false], // 關：ei，開：ee
   ['au作ow'  , true], // 關：au，開：ow
+  ['分i及ei'  , false], // 關：i，開：ei
+  ['ang作eng'  , false], // 關：ang，開：eng
 ];
 
 function 聲母規則() {
@@ -98,16 +99,23 @@ function 韻母規則() {
   if (is('江韻 牙喉音')) return 'ong';
 
   // 止攝
-  if (is('支脂之微韻 幫組')) return 'ei';
-  if (is('支脂之微韻 開口 舌齒音 端組')) return 'ei';
-  if (is('支脂之微韻 開口 舌齒音 來母')) return 'ei';
-  if (is('支脂之微韻 開口 舌齒音 孃母')) return 'ei';
-  if (is('支脂之微韻 開口 舌齒音')) return 'i';
-  if (is('支脂之微韻 開口 牙喉音 疑母')) return 'i';
-  if (is('支脂之微韻 開口 牙喉音 影母')) return 'i';
-  if (is('支脂之微韻 開口 牙喉音 云母')) return 'i';
-  if (is('支脂之微韻 開口 牙喉音 以母')) return 'i';
-  if (is('支脂之微韻 開口 牙喉音')) return 'ei';
+  // 分 ei 及 i
+  if (選項.分i及ei) {
+    if (is('支脂之微韻 幫組')) return 'ei';
+    if (is('支脂之微韻 開口 舌齒音 端組')) return 'ei';
+    if (is('支脂之微韻 開口 舌齒音 來母')) return 'ei';
+    if (is('支脂之微韻 開口 舌齒音 孃母')) return 'ei';
+    if (is('支脂之微韻 開口 舌齒音')) return 'i';
+    if (is('支脂之微韻 開口 牙喉音 疑母')) return 'i';
+    if (is('支脂之微韻 開口 牙喉音 影母')) return 'i';
+    if (is('支脂之微韻 開口 牙喉音 云母')) return 'i';
+    if (is('支脂之微韻 開口 牙喉音 以母')) return 'i';
+    if (is('支脂之微韻 開口 牙喉音')) return 'ei';
+  }else {
+    if (is('支脂之微韻 幫組')) return 'i';
+    if (is('支脂之微韻 開口')) return 'i'; // i 在 z/c/s 前為 ii，詳後
+  }
+
   if (is('支脂之微韻 合口 舌齒音')) return 'eoi';
   if (is('支脂之微韻 合口 牙喉音')) return 'ai';
 
@@ -284,12 +292,13 @@ if (選項.Ts訛作Ch && 聲母 === 'Ts' && 韻母 !== 'z') 聲母 = 'Ch';
 // oi 作 oy
 if (選項.oi作oy && 韻母 === 'oi') 韻母 = 'oy';
 
-// ei 作 ee
-if (選項.ei作ee && 韻母 === 'ei') {
-  if (選項.拼式 === '英式') 韻母 = 'ee';
-  else 韻母 = 'i';
-}
+// ang 作 eng
+if (選項.ang作eng && 韻母 === 'ang') 韻母 = 'eng';
+
 
 if (聲母 === '') 韻母 = 韻母.slice(0, 1).toUpperCase() + 韻母.slice(1);
+
+// TODO: Hang -> Heng
+// TODO: FanWan: i -> ee, ei
 
 return 聲母 + 韻母;
