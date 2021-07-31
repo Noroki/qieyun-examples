@@ -298,7 +298,4 @@ if (選項.ang作eng && 韻母 === 'ang') 韻母 = 'eng';
 
 if (聲母 === '') 韻母 = 韻母.slice(0, 1).toUpperCase() + 韻母.slice(1);
 
-// TODO: Hang -> Heng
-// TODO: FanWan: i -> ee, ei
-
 return 聲母 + 韻母;
