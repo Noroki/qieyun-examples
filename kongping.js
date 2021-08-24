@@ -16,13 +16,40 @@ const is = (x) => 音韻地位.屬於(x);
 // 選項
 if (!音韻地位) return [
   ['拼式', [1, '英式', '歐陸式']],// 切換英式/歐陸式
+
   ['口語eng及ek'  , false], // 關：ing/ik，開：eng/ek
+
   ['Ts訛作Ch'  , false], // 關：Ts，開：Ch
+
+  ['au/ow', [1, 'au', 'ow']],// 切換au/ow *
+  ['Chau作Chow', false], // 關閉：Chau (38)，打開：Chow (5) *
+
   ['aa作ah'  , true], // 關：a，開：ah
-  ['oi作oy'  , true], // 關：oi，開：oy
-  ['au作ow'  , true], // 關：au，開：ow
+  ['Waa作Wah', true], // 關閉：Wa (33)，打開：Wah (57) *
+
+  ['oi作oy'  , true], // 
+  ['Choi作Choy', false], // 關閉：Choi (36)，打開：Choy (0) *
+
   ['分i及ei'  , false], // 關：i，開：ei
   ['ang作eng'  , false], // 關：ang，開：eng
+
+  ['om及op作am及ap', false], // 關閉：om/op，打開：am/ap *
+  ['u作oo', false], // 關閉：u，打開：oo *
+  ['ui作ooi', false], // 關閉：ui，打開：ooi *
+  ['un作oon', false], // 關閉：un，打開：oon *
+  ['ing及ik作eng及ek', false], // 關閉：ing/ik，打開：eng/ek *
+  ['S作Sh', false], // 關閉：S，打開：Sh *
+
+  ['Ku作Kwu', true], // 關閉：Ku (5)，打開：「ui作ooi」關閉時作Kwu (10)，打開時作Kwoo (0) *
+  ['Kui作Kwui', true], // 關閉：Kui，打開：「ui作ooi」關閉時作Kwui，打開時作Kwooi *
+  ['Kun及Kut作Kwun及Kwut', true], // 關閉：Kun/Kut (4)，打開：「ui作ooi」關閉時作Kwun/Kwut (18)，打開時作Kwoon/Kwoot (0) *
+
+  ['ei作i', false], // 關閉：ei，打開：「i作ee」關閉時作i，打開時作ee *
+  ['i作ee', false], // 關閉：i (127)，打開：ee (79) *
+  ['ue作u', true], // 關閉：ue，打開：u *
+  ['am及ap作um及up', false], // 關閉：am/ap，打開：um/up *
+  ['an及at作un及ut', false], // 關閉：an/at，打開：un/ut *
+
 ];
 
 function 聲母規則() {
