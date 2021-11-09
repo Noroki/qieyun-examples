@@ -15,52 +15,20 @@ const is = (x) => 音韻地位.屬於(x);
 
 // 選項
 if (!音韻地位) return [
+  //  IPA: ɐ, i, u; 英式： u, ee, oo; 歐陸式： a, i, u
   ['拼式', [1, '英式', '歐陸式']],// 切換英式/歐陸式
 
-  // Consonants
-  ['S作Sh', false], // 關閉：S，打開：Sh *
-  ['Ts訛作Ch'  , false], // 關：Ts，開：Ch
-
-  // Vowels
-  // i-/e-
-  ['ing及ik作eng及ek', false], // 關閉：ing/ik，打開：eng/ek *
-
-  // aa/ah
-  ['aa作ah'  , true], // 關：a，開：ah
-
-  // au/ow:
-  ['au作ow', false], // 關：au，開：ow
-
-  // a-
-  ['ang作eng', false], // 關：ang，開：eng //Special case
-
-  ['am及ap作um及up', false], // 關閉：am/ap，打開：um/up *
-  ['an及at作un及ut', false], // 關閉：an/at，打開：un/ut *
-
-  // oi/oy 
-  ['oi作oy'  , true], // 關：oi，開：oy
-
-  ['om及op作am及ap', false], // 關閉：om/op，打開：am/ap *
-
-  // u/oo
-  ['u作oo', false], // 關閉：u，打開：oo *
-  ['ui作ooi', false], // 關閉：ui，打開：ooi *
-  ['un作oon', false], // 關閉：un，打開：oon * 
-  ['ung作oong', false], // 關閉：ung，打開：oong * 
-
-  // K/Kw
-  ['Ku作Kwu', true], // 關閉：Ku (5)，打開：「ui作ooi」關閉時作Kwu (10)，打開時作Kwoo (0) *
-  ['Kui作Kwui', true], // 關閉：Kui，打開：「ui作ooi」關閉時作Kwui，打開時作Kwooi *
-  ['Kun及Kut作Kwun及Kwut', true], // 關閉：Kun/Kut (4)，打開：「ui作ooi」關閉時作Kwun/Kwut (18)，打開時作Kwoon/Kwoot (0) *
-
-  // i
-  ['分i及ei'  , false], // 關：i，開：ei
-  ['ei作i', false], // 關閉：ei，打開：「i作ee」關閉時作i，打開時作ee *
-  ['i作ee', false], // 關閉：i (127)，打開：ee (79) *
-
-  // ue/u
-  ['ue作u', true], // 關閉：ue，打開：u *
-
+  ['g', [1, 'k', 'kw']],
+  ['s', [1, 's', 'sh']],
+  ['sh', [1, 'sh', 's']],
+  ['z及c', [1, 'ts', 'ch']],
+  ['oi', [1, 'oi', 'oy']],
+  ['au', [1, 'au', 'ow']],
+  ['yu', [1, 'ue', 'u']],
+  ['aa', [1, 'a', 'ah']],
+  ['ei', [1, 'i', 'ei']],
+  ['ang', [1, 'ang', 'eng']],
+  ['ing及ik', [1, 'ing及ik', 'eng及ek']],
 ];
 
 function 聲母規則() {
@@ -119,27 +87,21 @@ function 韻母規則() {
   if (is('江韻 牙喉音')) return 'ong';
 
   // 止攝
-  // 分 ei 及 i // TODO
-  if (選項.分i及ei) {
-    if (is('支脂之微韻 幫組')) return 'ei';
-    if (is('支脂之微韻 開口 舌齒音 端組')) return 'ei';
-    if (is('支脂之微韻 開口 舌齒音 來母')) return 'ei';
-    if (is('支脂之微韻 開口 舌齒音 孃母')) return 'ei';
-    if (is('支脂之微韻 開口 舌齒音')) return 'i';
-    if (is('支脂之微韻 開口 牙喉音 疑母')) return 'i';
-    if (is('支脂之微韻 開口 牙喉音 影母')) return 'i';
-    if (is('支脂之微韻 開口 牙喉音 云母')) return 'i';
-    if (is('支脂之微韻 開口 牙喉音 以母')) return 'i';
-    if (is('支脂之微韻 開口 牙喉音')) return 'ei';
-  }else {
-    if (is('支脂之微韻 幫組')) return 'i';
-    if (is('支脂之微韻 開口')) return 'i'; // i 在 z/c/s 前為 ii，詳後
-  }
+  if (is('支脂之微韻 幫組')) return 'ei';
+  if (is('支脂之微韻 開口 舌齒音 端組')) return 'ei';
+  if (is('支脂之微韻 開口 舌齒音 來母')) return 'ei';
+  if (is('支脂之微韻 開口 舌齒音 孃母')) return 'ei';
+  if (is('支脂之微韻 開口 舌齒音')) return 'i'; // 開口： i 在 z/c/s 前為 ii，詳後
+  if (is('支脂之微韻 開口 牙喉音 疑母')) return 'i';
+  if (is('支脂之微韻 開口 牙喉音 影母')) return 'i';
+  if (is('支脂之微韻 開口 牙喉音 云母')) return 'i';
+  if (is('支脂之微韻 開口 牙喉音 以母')) return 'i';
+  if (is('支脂之微韻 開口 牙喉音')) return 'ei';
   if (is('支脂之微韻 合口 舌齒音')) return 'eoi';
   if (is('支脂之微韻 合口 牙喉音')) return 'ai';
 
   // 遇攝
-  if (is('魚虞韻 幫組 幫滂並母')) return 選項.拼式 === '歐陸式'? 'u' : 'oo';
+  if (is('魚虞韻 幫組 幫滂並母')) return 'u';
   if (is('魚虞韻 幫組 明母')) return 'o';
   if (is('魚虞韻 舌齒音 端組')) return 'eoi';
   if (is('魚虞韻 舌齒音 來母')) return 'eoi';
@@ -153,7 +115,7 @@ function 韻母規則() {
   if (is('模韻 脣音')) return 'o';
   if (is('模韻 舌齒音')) return 'o';
   if (is('模韻 牙喉音 疑母')) return '';
-  if (is('模韻 牙喉音')) return 選項.拼式 === '歐陸式'? 'u' : 'oo';
+  if (is('模韻 牙喉音')) return 'u';
 
   // 蟹攝
   if (is('齊韻')) return 'ai';
@@ -175,7 +137,7 @@ function 韻母規則() {
   if (is('佳皆夬韻 合口')) return 'aai';
   if (is('灰韻 舌齒音')) return 'eoi';
   if (is('灰韻 疑母')) return 'oi';
-  if (is('灰韻')) return 'ui';// ui/ooi?
+  if (is('灰韻')) return 'ui';
   if (is('咍韻')) return 'oi';
   if (is('廢韻')) return 'ai';
 
@@ -188,7 +150,7 @@ function 韻母規則() {
   if (is('元韻 幫組')) return 'aan';
   if (is('元韻 開口')) return 'in';
   if (is('元韻 合口')) return 'uen';
-  if (is('魂韻 幫組')) return 選項.拼式 === '歐陸式'? 'un' : 'oon';
+  if (is('魂韻 幫組')) return 'un';
   if (is('魂韻 端組')) return 'eon';
   if (is('魂韻 來母')) return 'eon';
   if (is('魂韻 精組')) return 'uen';
@@ -196,11 +158,11 @@ function 韻母規則() {
   if (is('痕韻')) return 'an';
 
   // 山攝
-  if (is('寒韻 幫組')) return 選項.拼式 === '歐陸式'? 'un' : 'oon';
+  if (is('寒韻 幫組')) return 'un';
   if (is('寒韻 開口 舌齒音')) return 'aan';
   if (is('寒韻 開口 牙喉音')) return 'on';
   if (is('寒韻 合口 舌齒音')) return 'uen';
-  if (is('寒韻 合口 牙喉音')) return 選項.拼式 === '歐陸式'? 'un' : 'oon';
+  if (is('寒韻 合口 牙喉音')) return 'un';
   if (is('刪山韻')) return 'aan';
   if (is('仙先韻 幫組')) return 'in';
   if (is('仙先韻 開口')) return 'in';
@@ -218,7 +180,7 @@ function 韻母規則() {
   if (is('歌韻 三等 合口')) return 'eu';
 
   // 假攝
-  if (is('麻韻 二等')) return 選項.aa作ah ? 'ah' : 'a';
+  if (is('麻韻 二等')) return 'aa';
   if (is('麻韻 三等')) return 'e';
 
   // 宕攝
@@ -240,7 +202,7 @@ function 韻母規則() {
   if (is('登韻')) return 'ang';
 
   // 流攝
-  if (is('尤侯幽韻')) return 選項.au作ow? 'ow' : 'au';
+  if (is('尤侯幽韻')) return 'au';
 
   // 深攝
   if (is('侵韻')) return 'am'; // m 韻尾在聲母為脣音時為 n，詳後，下同
@@ -248,7 +210,7 @@ function 韻母規則() {
   // 咸攝
   if (is('覃談韻 幫組')) return 'aam';
   if (is('覃談韻 舌齒音')) return 'aam';
-  if (is('覃談韻 牙喉音')) return 'om'; // -om 併入 -am，詳後
+  if (is('覃談韻 牙喉音')) return 'om';
   if (is('鹽添嚴韻')) return 'im';
   if (is('咸銜凡韻')) return 'aam';
 
@@ -265,66 +227,82 @@ if (韻母 === 'i') {
 }
 
 // ng 拼細音時為 y
-const is細音 = ['eo', 'i', 'eu', 'u', 'oo', 'ue'].some((x) => 韻母.startsWith(x));
+const is細音 = ['eo', 'i', 'eu', 'u', 'ue'].some((x) => 韻母.startsWith(x));
 if (聲母 === 'ng' && is細音) 聲母 = 'y';
 
-// 合口字 TODO
-if (is('合口 或 模韻') && !['eo', 'eu', 'ue'].some((x) => 韻母.startsWith(x))) { // 合口字
-  if (聲母 === 'K' && !韻母.startsWith('oo')) 聲母 = 'Kw';
-  else if (聲母 === 'K' && !韻母.startsWith('oo')) 聲母 = 'Kw';// Kwun, Koon/Kwoon?
-  else if (聲母 === 'H' && !韻母.startsWith('i')) 聲母 = 'F';
-  else if (聲母 === 'Y') 聲母 = 'W';
-  else if (聲母 === '') 聲母 = 'W';
+// 合口字
+if (is('合口 或 模韻') && !['eo', 'eu', 'ue'].some((x) => 韻母.startsWith(x))) {
+    if (!韻母.startsWith('i') || is('見母')) {
+        if (聲母 === 'h') 聲母 = 'f';
+        else if (聲母 === 'k') {
+            if (is('溪母 一等') && !is('魂唐韻')) 聲母 = 'f'; // ??
+            else if (韻母.startsWith('u')) 聲母 = 'k';
+            else 聲母 = 'kw';
+        }
+    }
+    if (聲母 === 'y' || !聲母) 聲母 = 'w';
 }
 
-// 不區分 aa 和 a TODO
+// sh:  Sh 作 S
+if (選項.sh === 's' && 聲母 === 'sh') 聲母 = 's';
+
+// s:  S 作 Sh
+if (選項.s === 'sh' && 聲母 === 's' && 韻母 !== 'ze') 聲母 = 'sh';
+
+// z及c: Ts 作 Ch
+if (選項.z及c === 'ch' && 聲母 === 'ts' && 韻母 !== 'z') 聲母 = 'ch';
+
+// oi: Choi 作 Choy
+if (選項.oi === 'oy' && 聲母 === 'Ch' && 韻母 === 'oi') 韻母 = 'oy';
+
+// au: Chau 作 Chow
+if (選項.au === 'ow' && 聲母 === 'Ch' && 韻母 === 'au') 韻母 = 'ow';
+
+// ue: ue 作 u
+if (選項.ue === 'u' && 韻母 === 'ue') 韻母 = 'u';
+
+// aa:  Wa 作 Wah
+if (選項.aa === 'ah' && 聲母 === 'w' && 韻母 === 'aa') 韻母 = 'ah';
+
+// ei: ei 作 i
+if (選項.ei === 'i' && 韻母 === 'ei') 韻母 = 'i';
+
+// ang: Hang 作 Heng
+if (選項.ang === 'eng' && 聲母 === 'h' && 韻母 === 'ang' ) 韻母 = 'eng';
+
+// ing及ik: ing及ik 作 eng及ek (白讀)
+if (選項.ing及ik === 'eng及ek' && ['ing', 'ik'].includes(韻母)) 韻母 = 'e' + 韻母.slice(1);
+
+// 英式
+if (選項.拼式 === '英式') { // bugs, need to enumerate all
+    if (['am', 'at'].includes(韻母)) 韻母 = 'u' + 韻母.slice(1);// *an, *ap, ak??
+    if (['u', 'un'].includes(韻母)) 韻母 = 'oo' + 韻母.slice(1); // ui, ung??
+    if (['i', 'in'].includes(韻母)) 韻母 = 'ee' + 韻母.slice(1);
+}
+
+// g: K or Kw
+if (選項.g === 'kw') {
+    if (聲母 === 'k' && ['u', 'un'].includes(韻母)) 聲母 = 'kw'; // Kwoo- 不合法 //ui, ut??
+}
+
+// 不區分 aa 和 a
+if (韻母.startsWith('aa')) 韻母 = 韻母.slice(1);
+
+// 不區分 eo 和 u
+if (韻母.startsWith('eo')) 韻母 = 'u' + 韻母.slice(2);
 
 // m 韻尾在聲母為脣音時為 n
 if (is('幫組') && 韻母.endsWith('m')) 韻母 = 韻母.slice(0, -1) + 'n';
-
-// 入聲字
-if (is('入聲')) {
-  if (韻母.endsWith('m')) 韻母 = 韻母.slice(0, -1) + 'p';
-  else if (韻母.endsWith('n')) 韻母 = 韻母.slice(0, -1) + 't';
-  else if (韻母.endsWith('ng')) 韻母 = 韻母.slice(0, -2) + 'k';
-}
-
-// eo 作 u
-const isEO = ['eo'].some((x) => 韻母.startsWith(x));
-if (isEO) 韻母 = 'u' + 韻母.slice(2);
-
-// 單 ue 作 ue/u
-const isUE = ['ue'].some((x) => 韻母.startsWith(x));
-if (聲母 === 'Ch' && isUE) 韻母 = 'u' + 韻母.slice(2);
-
-// a 作 u （英式）
-if (選項.拼式 === '英式' && ['am', 'an', 'ap', 'ak', 'at'].includes(韻母)) 韻母 = 'u' + 韻母.slice(1);// at -> ut?
-// TODO: an not to un
-
-// 單 aa 作 ah
-const isAA = ['aa'].some((x) => 韻母.startsWith(x));
-if (isAA) 韻母 = 'a' + 韻母.slice(2);
-
-// 單 i 作 ee （英式）
-if (選項.拼式 === '英式' && 韻母 === 'i') 韻母 = 'ee'; 
-
-// 口語 ing 作 eng
-if (選項.口語eng及ek && ['ing', 'ik'].includes(韻母)) 韻母 = 'e' + 韻母.slice(1);
-
-// Ts 訛作 Ch
-if (選項.Ts訛作Ch && 聲母 === 'Ts' && 韻母 !== 'z') 聲母 = 'Ch';
-
-// oi 作 oy
-if (選項.oi作oy && 韻母 === 'oi') 韻母 = 'oy';
-
-// ang 作 eng
-if (選項.ang作eng && 韻母 === 'ang') 韻母 = 'eng';
 
 // 首字母大寫
 if (聲母 === '') 韻母 = 韻母[0].toUpperCase() + 韻母.slice(1);
 else 聲母 = 聲母[0].toUpperCase() + 聲母.slice(1);
 
-if (選項.au/ow  === 'au') 選項.Chau作Chow = true;
-else 選項.Chau作Chow = false;
+// 入聲字
+if (is('入聲')) {
+    if (韻母.endsWith('m')) 韻母 = 韻母.slice(0, -1) + 'p';
+    else if (韻母.endsWith('n')) 韻母 = 韻母.slice(0, -1) + 't';
+    else if (韻母.endsWith('ng')) 韻母 = 韻母.slice(0, -2) + 'k';
+  }
 
 return 聲母 + 韻母;
