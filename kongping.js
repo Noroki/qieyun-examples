@@ -18,17 +18,17 @@ if (!音韻地位) return [
   //  IPA: ɐ, i, u; 英式： u, ee, oo; 歐陸式： a, i, u
   ['拼式', [1, '英式', '歐陸式']],// 切換英式/歐陸式
 
-  ['g', [1, 'k', 'kw']],
+  ['k', [1, 'k', 'kw']],
+  ['ts及tsʰ', [1, 'ts', 'ch']],
   ['s', [1, 's', 'sh']],
-  ['sh', [1, 'sh', 's']],
-  ['z及c', [1, 'ts', 'ch']],
-  ['oi', [1, 'oi', 'oy']],
-  ['au', [1, 'au', 'ow']],
-  ['yu', [1, 'ue', 'u']],
-  ['aa', [1, 'a', 'ah']],
+  ['ʃ', [1, 'sh', 's']],
+  ['a', [1, 'a', 'ah']],
+  ['ɐu', [1, 'au', 'ow']],
+  ['ɐŋ', [1, 'ang', 'eng']],
+  ['ɪŋ及ɪk', [1, 'ing及ik', 'eng及ek']],
   ['ei', [1, 'i', 'ei']],
-  ['ang', [1, 'ang', 'eng']],
-  ['ing及ik', [1, 'ing及ik', 'eng及ek']],
+  ['ɔy', [1, 'oi', 'oy']],
+  ['y', [1, 'ue', 'u']],
 ];
 
 function 聲母規則() {
@@ -244,34 +244,34 @@ if (is('合口 或 模韻') && !['eo', 'eu', 'ue'].some((x) => 韻母.startsWith
 }
 
 // sh:  Sh 作 S
-if (選項.sh === 's' && 聲母 === 'sh') 聲母 = 's';
+if (選項.ʃ === 's' && 聲母 === 'sh') 聲母 = 's';
 
 // s:  S 作 Sh
 if (選項.s === 'sh' && 聲母 === 's' && 韻母 !== 'ze') 聲母 = 'sh';
 
 // z及c: Ts 作 Ch
-if (選項.z及c === 'ch' && 聲母 === 'ts' && 韻母 !== 'z') 聲母 = 'ch';
+if (選項.ts及tsʰ === 'ch' && 聲母 === 'ts' && 韻母 !== 'z') 聲母 = 'ch';
 
 // oi: Choi 作 Choy
-if (選項.oi === 'oy' && 聲母 === 'Ch' && 韻母 === 'oi') 韻母 = 'oy';
+if (選項.ɔy === 'oy' && 聲母 === 'Ch' && 韻母 === 'oi') 韻母 = 'oy';
 
 // au: Chau 作 Chow
-if (選項.au === 'ow' && 聲母 === 'Ch' && 韻母 === 'au') 韻母 = 'ow';
+if (選項.ɐu === 'ow' && 聲母 === 'Ch' && 韻母 === 'au') 韻母 = 'ow';
 
 // ue: ue 作 u
-if (選項.ue === 'u' && 韻母 === 'ue') 韻母 = 'u';
+if (選項.y === 'u' && 韻母 === 'ue') 韻母 = 'u';
 
 // aa:  Wa 作 Wah
-if (選項.aa === 'ah' && 聲母 === 'w' && 韻母 === 'aa') 韻母 = 'ah';
+if (選項.a === 'ah' && 聲母 === 'w' && 韻母 === 'aa') 韻母 = 'ah';
 
 // ei: ei 作 i
 if (選項.ei === 'i' && 韻母 === 'ei') 韻母 = 'i';
 
 // ang: Hang 作 Heng
-if (選項.ang === 'eng' && 聲母 === 'h' && 韻母 === 'ang' ) 韻母 = 'eng';
+if (選項.ɐŋ === 'eng' && 聲母 === 'h' && 韻母 === 'ang' ) 韻母 = 'eng';
 
 // ing及ik: ing及ik 作 eng及ek (白讀)
-if (選項.ing及ik === 'eng及ek' && ['ing', 'ik'].includes(韻母)) 韻母 = 'e' + 韻母.slice(1);
+if (選項.ɪŋ及ɪk === 'eng及ek' && ['ing', 'ik'].includes(韻母)) 韻母 = 'e' + 韻母.slice(1);
 
 // 英式
 if (選項.拼式 === '英式') { // bugs, need to enumerate all
@@ -281,7 +281,7 @@ if (選項.拼式 === '英式') { // bugs, need to enumerate all
 }
 
 // g: K or Kw
-if (選項.g === 'kw') {
+if (選項.k === 'kw') {
     if (聲母 === 'k' && ['u', 'un'].includes(韻母)) 聲母 = 'kw'; // Kwoo- 不合法 //ui, ut??
 }
 
