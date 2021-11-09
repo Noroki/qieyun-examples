@@ -17,99 +17,92 @@ const is = (x) => 音韻地位.屬於(x);
 if (!音韻地位) return [
   ['拼式', [1, '英式', '歐陸式']],// 切換英式/歐陸式
 
-  ['口語eng及ek'  , false], // 關：ing/ik，開：eng/ek
-
+  // Consonants
+  ['S作Sh', false], // 關閉：S，打開：Sh *
   ['Ts訛作Ch'  , false], // 關：Ts，開：Ch
 
-  ['au/ow', [1, 'au', 'ow']],// 切換au/ow *
-  ['Chau作Chow', false], // 關閉：Chau (38)，打開：Chow (5) *
+  // Vowels
+  // i-/e-
+  ['ing及ik作eng及ek', false], // 關閉：ing/ik，打開：eng/ek *
 
+  // aa/ah
   ['aa作ah'  , true], // 關：a，開：ah
-  ['Waa作Wah', true], // 關閉：Wa (33)，打開：Wah (57) *
 
-  ['oi作oy'  , true], // 
-  ['Choi作Choy', false], // 關閉：Choi (36)，打開：Choy (0) *
+  // au/ow:
+  ['au作ow', false], // 關：au，開：ow
 
-  ['分i及ei'  , false], // 關：i，開：ei
-  ['ang作eng'  , false], // 關：ang，開：eng
+  // a-
+  ['ang作eng', false], // 關：ang，開：eng //Special case
+
+  ['am及ap作um及up', false], // 關閉：am/ap，打開：um/up *
+  ['an及at作un及ut', false], // 關閉：an/at，打開：un/ut *
+
+  // oi/oy 
+  ['oi作oy'  , true], // 關：oi，開：oy
 
   ['om及op作am及ap', false], // 關閉：om/op，打開：am/ap *
+
+  // u/oo
   ['u作oo', false], // 關閉：u，打開：oo *
   ['ui作ooi', false], // 關閉：ui，打開：ooi *
-  ['un作oon', false], // 關閉：un，打開：oon *
-  ['ing及ik作eng及ek', false], // 關閉：ing/ik，打開：eng/ek *
-  ['S作Sh', false], // 關閉：S，打開：Sh *
+  ['un作oon', false], // 關閉：un，打開：oon * 
+  ['ung作oong', false], // 關閉：ung，打開：oong * 
 
+  // K/Kw
   ['Ku作Kwu', true], // 關閉：Ku (5)，打開：「ui作ooi」關閉時作Kwu (10)，打開時作Kwoo (0) *
   ['Kui作Kwui', true], // 關閉：Kui，打開：「ui作ooi」關閉時作Kwui，打開時作Kwooi *
   ['Kun及Kut作Kwun及Kwut', true], // 關閉：Kun/Kut (4)，打開：「ui作ooi」關閉時作Kwun/Kwut (18)，打開時作Kwoon/Kwoot (0) *
 
+  // i
+  ['分i及ei'  , false], // 關：i，開：ei
   ['ei作i', false], // 關閉：ei，打開：「i作ee」關閉時作i，打開時作ee *
   ['i作ee', false], // 關閉：i (127)，打開：ee (79) *
+
+  // ue/u
   ['ue作u', true], // 關閉：ue，打開：u *
-  ['am及ap作um及up', false], // 關閉：am/ap，打開：um/up *
-  ['an及at作un及ut', false], // 關閉：an/at，打開：un/ut *
 
 ];
 
 function 聲母規則() {
-  if (is('幫母')) {
-    if (is('東韻 三等 或 鍾微虞廢文元陽尤凡韻')) return 'F';
-    return 'P';
+  if (is('幫滂並母')) return is('東韻 三等 或 鍾微虞廢文元陽尤凡韻') ? 'f' : 'p'; // 輕脣十韻
+  if (is('明母')) return 'm';
+
+  if (is('端透定母')) return 't';
+  if (is('泥母')) return 'n';
+  if (is('來母')) return 'l';
+
+  if (is('知徹澄母')) return 'ch';
+  if (is('孃母')) return 'n';
+
+  if (is('精清從邪母')) return 'ts'; // 邪母塞擦音多於擦音
+  if (is('心母')) return 's';
+
+  // 二等 ch, 三等 ts
+  if (is('莊初崇俟母')) return is('二等') ? 'ch' : 'ts';
+  if (is('生母')) return is('二等') ? 'sh' : 's';
+
+  if (is('章昌母')) return 'ch';
+  if (is('常書船母')) return 'sh'; // 常母擦音多於塞擦音
+  if (is('日母')) return 'y';
+
+  if (is('見羣母')) return 'k';
+  if (is('溪母')) { // ? // 多數擦化
+    if (is('尤侵韻')) return 'y';
+    if (is('合口 或 支齊模韻') && !is('元陽先夬韻')) return 'k';
+    return 'h';
   }
-  if (is('滂母')) {
-    if (is('東韻 三等 或 鍾微虞廢文元陽尤凡韻')) return 'F';
-    return 'P';
+  if (is('疑母')) return 'ng'; // ng 拼細音時為 y，詳後
+
+  if (is('曉母')) {
+    if (is('尤欣韻 平聲')) return 'y'; // ?
+    return 'h';
   }
-  if (is('並母')) {
-    if (is('東韻 三等 或 鍾微虞廢文元陽尤凡韻')) return 'F';
-    if (is('平聲')) return 'P';
-    return 'P';
-  }
-  if (is('明母')) return 'M';
-
-  if (is('端母')) return 'T';
-  if (is('透母')) return 'T';
-  if (is('定母')) return 'T';
-  if (is('泥母')) return 'N';
-  if (is('來母')) return 'L';
-
-  if (is('知母')) return 'Ch';
-  if (is('徹母')) return 'Ch';
-  if (is('澄母')) return 'Ch';
-  if (is('孃母')) return 'N';
-
-  if (is('精母')) return 'Ts';
-  if (is('清母')) return 'Ts';
-  if (is('從母')) return 'Ts';
-  if (is('心母')) return 'S';
-  if (is('邪母')) return 'Ts'; // 塞擦音多於擦音
-
-  if (is('莊母')) return 'Ch';
-  if (is('初母')) return 'Ch';
-  if (is('崇母')) return 'Ch';
-  if (is('生母')) return 'Sh';
-  if (is('俟母')) return 'Ch';
-
-  if (is('章母')) return 'Ch';
-  if (is('昌母')) return 'Ch';
-  if (is('常母')) return 'Sh'; // 擦音多於塞擦音
-  if (is('書母')) return 'Sh';
-  if (is('船母')) return 'Sh';
-  if (is('日母')) return 'Y';
-
-  if (is('見母')) return 'K';
-  if (is('溪母')) return 'H'; // 多數擦化
-  if (is('羣母')) return 'K';
-  if (is('疑母')) return 'Ng'; // Ng 拼細音時為 Y，詳後
-
-  if (is('曉母')) return 'H';
-  if (is('匣母')) {
-    if (is('合口 或 模韻')) return 'Y'; // 非 ue 前為 W，詳後
-    return 'H';
+  if (is('匣母')) { // ?四等、齊韻
+    if (is('合口 或 四等 或 模韻') && !is('齊韻')) return 'y'; // 非 ue 前為 w，詳後
+    return 'h';
   }
   if (is('影云以母')) {
-    if (is('三四等')) return 'Y'; // 非 ue 前為 W，詳後
+    if (is('三四等')) return 'y'; // 非 ue 前為 w，詳後
     return '';
   }
 
@@ -126,7 +119,7 @@ function 韻母規則() {
   if (is('江韻 牙喉音')) return 'ong';
 
   // 止攝
-  // 分 ei 及 i
+  // 分 ei 及 i // TODO
   if (選項.分i及ei) {
     if (is('支脂之微韻 幫組')) return 'ei';
     if (is('支脂之微韻 開口 舌齒音 端組')) return 'ei';
@@ -142,7 +135,6 @@ function 韻母規則() {
     if (is('支脂之微韻 幫組')) return 'i';
     if (is('支脂之微韻 開口')) return 'i'; // i 在 z/c/s 前為 ii，詳後
   }
-
   if (is('支脂之微韻 合口 舌齒音')) return 'eoi';
   if (is('支脂之微韻 合口 牙喉音')) return 'ai';
 
@@ -266,14 +258,17 @@ function 韻母規則() {
 let 聲母 = 聲母規則();
 let 韻母 = 韻母規則();
 
-// i 在 Ts/S 前為 z
-if (['Ts', 'Ts'].includes(聲母) && 韻母 === 'i') 韻母 = 'z';
-if (['S'].includes(聲母) && 韻母 === 'i') 韻母 = 'ze';
+// i 在 ts 前為 z, ，在 s 後為 ze
+if (韻母 === 'i') {
+    if (聲母 === 'ts') 韻母 = 'z';
+    else if (聲母 === 's') 韻母 = 'ze';
+}
 
-// Ng 拼細音時為 Y
+// ng 拼細音時為 y
 const is細音 = ['eo', 'i', 'eu', 'u', 'oo', 'ue'].some((x) => 韻母.startsWith(x));
-if (聲母 === 'Ng' && is細音) 聲母 = 'Y';
+if (聲母 === 'ng' && is細音) 聲母 = 'y';
 
+// 合口字 TODO
 if (is('合口 或 模韻') && !['eo', 'eu', 'ue'].some((x) => 韻母.startsWith(x))) { // 合口字
   if (聲母 === 'K' && !韻母.startsWith('oo')) 聲母 = 'Kw';
   else if (聲母 === 'K' && !韻母.startsWith('oo')) 聲母 = 'Kw';// Kwun, Koon/Kwoon?
@@ -282,9 +277,12 @@ if (is('合口 或 模韻') && !['eo', 'eu', 'ue'].some((x) => 韻母.startsWith
   else if (聲母 === '') 聲母 = 'W';
 }
 
+// 不區分 aa 和 a TODO
+
 // m 韻尾在聲母為脣音時為 n
 if (is('幫組') && 韻母.endsWith('m')) 韻母 = 韻母.slice(0, -1) + 'n';
 
+// 入聲字
 if (is('入聲')) {
   if (韻母.endsWith('m')) 韻母 = 韻母.slice(0, -1) + 'p';
   else if (韻母.endsWith('n')) 韻母 = 韻母.slice(0, -1) + 't';
@@ -322,7 +320,11 @@ if (選項.oi作oy && 韻母 === 'oi') 韻母 = 'oy';
 // ang 作 eng
 if (選項.ang作eng && 韻母 === 'ang') 韻母 = 'eng';
 
+// 首字母大寫
+if (聲母 === '') 韻母 = 韻母[0].toUpperCase() + 韻母.slice(1);
+else 聲母 = 聲母[0].toUpperCase() + 聲母.slice(1);
 
-if (聲母 === '') 韻母 = 韻母.slice(0, 1).toUpperCase() + 韻母.slice(1);
+if (選項.au/ow  === 'au') 選項.Chau作Chow = true;
+else 選項.Chau作Chow = false;
 
 return 聲母 + 韻母;
