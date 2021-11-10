@@ -272,7 +272,7 @@ if (選項.ɪŋ及ɪk === 'eng及ek' && ['ing', 'ik'].includes(韻母)) 韻母 =
 
 // 英式
 if (選項.拼式 === '英式') { // bugs, need to enumerate all
-    if (['am', 'at'].includes(韻母)) 韻母 = 'u' + 韻母.slice(1);// *an, *ap, ak??
+    if (['am', 'an', 'at'].includes(韻母)) 韻母 = 'u' + 韻母.slice(1);// *ap, ang, ak??
     if (['u', 'un'].includes(韻母)) 韻母 = 'oo' + 韻母.slice(1); // ui, ung??
     if (['i', 'in'].includes(韻母)) 韻母 = 'ee' + 韻母.slice(1);
 }
