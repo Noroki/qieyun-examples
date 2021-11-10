@@ -258,9 +258,6 @@ if (選項.ɔy === 'oy' && 聲母 === 'Ch' && 韻母 === 'oi') 韻母 = 'oy';
 // au: Chau 作 Chow
 if (選項.ɐu === 'ow' && 聲母 === 'Ch' && 韻母 === 'au') 韻母 = 'ow';
 
-// ue: ue 作 u
-if (選項.y === 'u' && 韻母 === 'ue') 韻母 = 'u';
-
 // aa:  Wa 作 Wah
 if (選項.a === 'ah' && 聲母 === 'w' && 韻母 === 'aa') 韻母 = 'ah';
 
@@ -279,6 +276,9 @@ if (選項.拼式 === '英式') { // bugs, need to enumerate all
     if (['u', 'un'].includes(韻母)) 韻母 = 'oo' + 韻母.slice(1); // ui, ung??
     if (['i', 'in'].includes(韻母)) 韻母 = 'ee' + 韻母.slice(1);
 }
+
+// ue: ue 作 u
+if (選項.y === 'u' && 韻母 === 'ue') 韻母 = 'u';
 
 // g: K or Kw
 if (選項.k === 'kw') {
