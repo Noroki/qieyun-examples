@@ -262,11 +262,11 @@ if (選項.s === 'sh' && 聲母 === 's' && 韻母 !== 'ze') 聲母 = 'sh';
 // z及c: Ts 作 Ch
 if (選項.ts及tsʰ === 'ch' && 聲母 === 'ts' && 韻母 !== 'z') 聲母 = 'ch';
 
-// oi: Choi 作 Choy
-if (選項.ɔy === 'oy' && 聲母 === 'Ch' && 韻母 === 'oi') 韻母 = 'oy';
+// oi: Choi/Tsoi 作 Choy/Tsoy
+if (選項.ɔy === 'oy' && ['ch', 'ts'].includes(聲母) && 韻母 === 'oi') 韻母 = 'oy';
 
 // au: Chau 作 Chow
-if (選項.ɐu === 'ow' && 聲母 === 'Ch' && 韻母 === 'au') 韻母 = 'ow';
+if (選項.ɐu === 'ow' && 聲母 === 'ch' && 韻母 === 'au') 韻母 = 'ow';
 
 // aa:  Wa 作 Wah
 if (選項.a === 'ah' && 聲母 === 'w' && 韻母 === 'aa') 韻母 = 'ah';
