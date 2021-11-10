@@ -288,7 +288,8 @@ if (選項.k === 'kw') {
 // 英式
 if (選項.拼式 === '英式') { // bugs, need to enumerate all
     if (['am', 'an', 'at'].includes(韻母)) 韻母 = 'u' + 韻母.slice(1);// *ap, ang, ak??
-    else if (['u', 'un'].includes(韻母)) 韻母 = 'oo' + 韻母.slice(1); // ui, ung??
+    else if (['u', 'un'].includes(韻母)) 韻母 = 'oo' + 韻母.slice(1); // ui??
+    else if (韻母 === 'ung' && 聲母 === 'l')  韻母 = 'oo' + 韻母.slice(1);
     else if (['i', 'in'].includes(韻母)) 韻母 = 'ee' + 韻母.slice(1);
 }
 
