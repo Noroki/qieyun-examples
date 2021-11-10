@@ -277,13 +277,13 @@ if (選項.拼式 === '英式') { // bugs, need to enumerate all
     if (['i', 'in'].includes(韻母)) 韻母 = 'ee' + 韻母.slice(1);
 }
 
-// ue: ue 作 u
-if (選項.y === 'u' && 韻母 === 'ue') 韻母 = 'u';
-
 // g: K or Kw
 if (選項.k === 'kw') {
     if (聲母 === 'k' && ['u', 'un'].includes(韻母)) 聲母 = 'kw'; // Kwoo- 不合法 //ui, ut??
 }
+
+// ue: ue 作 u
+if (選項.y === 'u' && 韻母 === 'ue') 韻母 = 'u';
 
 // 不區分 aa 和 a
 if (韻母.startsWith('aa')) 韻母 = 韻母.slice(1);
