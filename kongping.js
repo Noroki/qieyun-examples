@@ -22,7 +22,7 @@ if (!音韻地位) return [
   ['ts及tsʰ', [2, 'ts', 'ch']],
   ['s', [1, 's', 'sh']],
   ['ʃ', [1, 'sh', 's']],
-  ['a', [1, 'a', 'ah']],
+  ['a', [2, 'a', 'ah']],
   ['ɐu', [2, 'au', 'ow']],
   ['ɐŋ', [1, 'ang', 'eng']],
   ['ɪŋ及ɪk', [1, 'ing及ik', 'eng及ek']],
@@ -220,6 +220,16 @@ function 韻母規則() {
 let 聲母 = 聲母規則();
 let 韻母 = 韻母規則();
 
+// m 韻尾在聲母為脣音時為 n
+if (is('幫組') && 韻母.endsWith('m')) 韻母 = 韻母.slice(0, -1) + 'n';
+
+// 入聲字
+if (is('入聲')) {
+    if (韻母.endsWith('m')) 韻母 = 韻母.slice(0, -1) + 'p';
+    else if (韻母.endsWith('n')) 韻母 = 韻母.slice(0, -1) + 't';
+    else if (韻母.endsWith('ng')) 韻母 = 韻母.slice(0, -2) + 'k';
+  }
+
 // i 在 ts 前為 z, ，在 s 後為 ze
 if (韻母 === 'i') {
     if (聲母 === 'ts') 韻母 = 'z';
@@ -270,16 +280,16 @@ if (選項.ɐŋ === 'eng' && 聲母 === 'h' && 韻母 === 'ang' ) 韻母 = 'eng'
 // ing及ik: ing及ik 作 eng及ek (白讀)
 if (選項.ɪŋ及ɪk === 'eng及ek' && ['ing', 'ik'].includes(韻母)) 韻母 = 'e' + 韻母.slice(1);
 
-// 英式
-if (選項.拼式 === '英式') { // bugs, need to enumerate all
-    if (['am', 'an', 'at'].includes(韻母)) 韻母 = 'u' + 韻母.slice(1);// *ap, ang, ak??
-    if (['u', 'un'].includes(韻母)) 韻母 = 'oo' + 韻母.slice(1); // ui, ung??
-    if (['i', 'in'].includes(韻母)) 韻母 = 'ee' + 韻母.slice(1);
-}
-
 // g: K or Kw
 if (選項.k === 'kw') {
     if (聲母 === 'k' && ['u', 'un'].includes(韻母)) 聲母 = 'kw'; // Kwoo- 不合法 //ui, ut??
+}
+
+// 英式
+if (選項.拼式 === '英式') { // bugs, need to enumerate all
+    if (['am', 'an', 'at'].includes(韻母)) 韻母 = 'u' + 韻母.slice(1);// *ap, ang, ak??
+    else if (['u', 'un'].includes(韻母)) 韻母 = 'oo' + 韻母.slice(1); // ui, ung??
+    else if (['i', 'in'].includes(韻母)) 韻母 = 'ee' + 韻母.slice(1);
 }
 
 // ue: ue 作 u
@@ -291,18 +301,8 @@ if (韻母.startsWith('aa')) 韻母 = 韻母.slice(1);
 // 不區分 eo 和 u
 if (韻母.startsWith('eo')) 韻母 = 'u' + 韻母.slice(2);
 
-// m 韻尾在聲母為脣音時為 n
-if (is('幫組') && 韻母.endsWith('m')) 韻母 = 韻母.slice(0, -1) + 'n';
-
 // 首字母大寫
 if (聲母 === '') 韻母 = 韻母[0].toUpperCase() + 韻母.slice(1);
 else 聲母 = 聲母[0].toUpperCase() + 聲母.slice(1);
-
-// 入聲字
-if (is('入聲')) {
-    if (韻母.endsWith('m')) 韻母 = 韻母.slice(0, -1) + 'p';
-    else if (韻母.endsWith('n')) 韻母 = 韻母.slice(0, -1) + 't';
-    else if (韻母.endsWith('ng')) 韻母 = 韻母.slice(0, -2) + 'k';
-  }
 
 return 聲母 + 韻母;
