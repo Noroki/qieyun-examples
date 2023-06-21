@@ -1,6 +1,6 @@
 /* 推導港拼（香港政府粵語拼音）
  *
- * https://noroki.me/p/%E6%B8%AF%E6%8B%BC%E8%BD%89%E5%AF%AB%E8%A6%8F%E5%89%87/
+ * https://noroki.github.io/p/%E6%B8%AF%E6%8B%BC%E8%BD%89%E5%AF%AB%E8%A6%8F%E5%89%87/
  *
  * 參考文獻: 片岡新（2014）: “香港政府粵語拼音”：一個亂中有序的系統
  * 
