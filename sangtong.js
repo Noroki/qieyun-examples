@@ -20,7 +20,8 @@ if (is`云母 通攝 舒聲`) 音韻地位 = 音韻地位.調整('匣母', ['匣
 
 function 聲母規則() {
   return when([
-    ['幫滂並母 C類', 'f'],
+    // ['幫滂並母 C類', 'f'], // ** C類
+    ['幫滂並母 ((東韻 三等) 或 鍾微虞廢文元陽尤凡韻)', 'f'], // ** C類
     ['幫母 或 並母 仄聲', 'b'],
     ['滂母 或 並母 平聲', 'p'],
     ['明母', 'm'],
@@ -95,6 +96,12 @@ function 韻母規則() {
 
     ['臻攝', [
       ['三四等', [
+        // * 舊版推導器元韻在臻攝
+        ['元韻', [
+            ['脣音', 'aang'], // * aan - aang // ** C類
+            ['開口', 'in'],
+            ['合口', 'yun'],
+          ]],
         // ['合口 舌齒音', 'eon'], // * eon - ang
         ['合口 莊章組', 'ung'], // * eon - ung
         ['合口 精組', 'yun'], // * eon - yun
@@ -109,7 +116,9 @@ function 韻母規則() {
     ]],
 
     ['山攝', [
-      ['二等 或 脣音 C類', 'aang'], // * aan - aang
+    //   ['脣音 C類', 'aang'], // * aan - aang // ** C類
+    //   ['脣音 元韻', 'aang'], // * aan - aang // ** C類
+      ['二等', 'aang'], // * aan - aang
       ['三四等', [
         ['開口 或 脣音', 'in'],
         ['合口', 'yun'],
@@ -131,8 +140,9 @@ function 韻母規則() {
 
     ['果假攝', [
       ['三四等', [ 
-        ['脣音 C類', 'o'], /// 「縛」
-        ['C類', 'oe'], // *「縛」
+        // ['脣音 C類', 'o'], /// 「縛」 // ** C類
+        ['脣音 歌韻', 'o'], /// 「縛」 // ** C類
+        ['開口 牙喉音', 'oe'], // * 「茄」 
         ['開口 或 脣音', 'iaa'], // * e - iaa
         ['合口', 'oe'],
       ]],
@@ -146,7 +156,9 @@ function 韻母規則() {
 
     ['宕江攝', [
       ['三四等', [
-        ['脣音 C類 或 開口 莊組 或 合口', 'ong'],
+        // ['脣音 C類', 'ong'], // ** C類
+        ['陽韻 幫組', 'ong'], // ** C類
+        ['開口 莊組 或 合口', 'ong'],
         ['', 'oeng'],
       ]],
       ['二等 舌齒音', 'oeng'],
@@ -169,7 +181,9 @@ function 韻母規則() {
     ['深攝', 'am'], // -m 拼脣音時為 -n，詳後，下同
 
     ['咸攝', [
-      ['二等 或 脣音 C類', 'aang'], // * aam - aang
+    //   ['脣音 C類', 'aang'], // * aam - aang // ** C類
+      ['覃談韻 幫組', 'aang'], // * aam - aang // ** C類
+      ['二等', 'aang'], // * aam - aang
       ['三四等', 'in'], // * im - in
       ['一等 脣舌齒音', 'aang'], // 脣音僅僻字，如「姏」maan4 // * aam - aang
       ['一等 牙喉音', 'om'], // -om 併入 -am，但影響陰入分化，詳後
@@ -211,7 +225,7 @@ const 調值 = {
 
 function is短元音(韻母) {
   if (['am', 'an', 'ang', 'eon', 'ing', 'ung'].includes(韻母)) return true;
-  if (['aam', 'aan', 'im', 'in', 'om', 'on', 'ong', 'oeng', 'un', 'yun'].includes(韻母)) return false; 
+  // if (['aam', 'aan', 'im', 'in', 'om', 'on', 'ong', 'oeng', 'un', 'yun'].includes(韻母)) return false; 
   if (['aam', 'aan', 'aang', 'im', 'in', 'om', 'on', 'ong', 'oeng', 'un', 'yun'].includes(韻母)) return false; // * 新增 aang
   throw new Error('無長短元音規則：' + 韻母);
 }
@@ -238,7 +252,7 @@ if (is`合口 或 模韻` && !['eo', 'oe', 'yu'].some(x => 韻母.startsWith(x))
   if ((聲母 === 'g' || 聲母 === 'k') && !韻母.startsWith('u')) 聲母 += 'w';
   else if (聲母 === 'h' && !韻母.startsWith('i')) 聲母 = 'f';
   // else if (聲母 === 'j' || 聲母 === '') 聲母 = 'w'; 
-  else if (聲母 === 'j' || 聲母 === '' && !is`蟹攝`) 聲母 = 'w'; // * oo: 疑母，匣影云、以日母合口非 eo, oe, yu: j > w
+  else if ((聲母 === 'j' || 聲母 === '') && !is`蟹攝`) 聲母 = 'w'; // * oo: 疑母，匣影云、以日母合口非 eo, oe, yu: j > w
 }
 
 // * ng - 0 
