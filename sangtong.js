@@ -252,7 +252,7 @@ if (is`合口 或 模韻` && !['eo', 'oe', 'yu'].some(x => 韻母.startsWith(x))
   if ((聲母 === 'g' || 聲母 === 'k') && !韻母.startsWith('u')) 聲母 += 'w';
   else if (聲母 === 'h' && !韻母.startsWith('i')) 聲母 = 'f';
   // else if (聲母 === 'j' || 聲母 === '') 聲母 = 'w'; 
-  else if ((聲母 === 'j' || 聲母 === '') && !is`蟹攝`) 聲母 = 'w'; // * oo: 疑母，匣影云、以日母合口非 eo, oe, yu: j > w
+  else if ((聲母 === 'j' && !is`蟹攝 日以母`) || 聲母 === '') 聲母 = 'w'; // * oo: 疑母，匣影云、以日母合口非 eo, oe, yu: j > w
 }
 
 // * ng - 0 
